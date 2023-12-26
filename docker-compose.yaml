@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  user-auth-db:
+    image: postgres:16
+    container_name: user-auth-db
+    environment:
+      - POSTGRES_DB=user-auth-db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - 5432:5432

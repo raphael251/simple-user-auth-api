@@ -3,7 +3,9 @@ module github.com/raphael251/simple-user-auth-api
 go 1.21.5
 
 require (
+	github.com/go-chi/chi/v5 v5.0.11
 	github.com/google/uuid v1.5.0
+	github.com/lib/pq v1.10.9
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/crypto v0.17.0

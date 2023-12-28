@@ -48,7 +48,7 @@ func main() {
 	r.Get("/docs/*",
 		httpSwagger.Handler(
 			httpSwagger.URL(
-				fmt.Sprintf("http://localhost:%s/docs/doc.json", configs.ServerPort),
+				fmt.Sprintf("%s://%s:%s/docs/doc.json", configs.ServerProtocol, configs.ServerHost, configs.ServerPort),
 			),
 		),
 	)

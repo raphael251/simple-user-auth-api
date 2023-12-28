@@ -15,6 +15,8 @@ type conf struct {
 	DBUser             string `mapstructure:"DB_USER"`
 	DBPassword         string `mapstructure:"DB_PASSWORD"`
 	DBConnectionString string
+	ServerProtocol     string `mapstructure:"SERVER_PROTOCOL"`
+	ServerHost         string `mapstructure:"SERVER_HOST"`
 	ServerPort         string `mapstructure:"SERVER_PORT"`
 }
 

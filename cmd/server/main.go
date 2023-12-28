@@ -2,16 +2,29 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	_ "github.com/lib/pq"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 
 	"github.com/raphael251/simple-user-auth-api/configs"
+	_ "github.com/raphael251/simple-user-auth-api/docs"
 	"github.com/raphael251/simple-user-auth-api/infra/webserver/handlers"
 )
 
+// @title 				 						 Simple User Auth API
+// @version 			 						 1.0
+// @termsOfService 						 http://swagger.io/terms/
+
+// @contact.name 	 						 Raphael Passos
+// @contact.url 	 						 http://github.com/raphael251
+// @contact.email  						 raphael251@hotmail.com
+
+// @host					 						 localhost:3000
+// @BasePath			 						 /
 func main() {
 	configs, err := configs.LoadConfig()
 	if err != nil {
@@ -32,5 +45,13 @@ func main() {
 		r.Post("/", handlers.CreateUserHandler(db))
 	})
 
-	http.ListenAndServe(":"+configs.ServerPort, r)
+	r.Get("/docs/*",
+		httpSwagger.Handler(
+			httpSwagger.URL(
+				fmt.Sprintf("http://localhost:%s/docs/doc.json", configs.ServerPort),
+			),
+		),
+	)
+
+	http.ListenAndServe(fmt.Sprintf(":%s", configs.ServerPort), r)
 }

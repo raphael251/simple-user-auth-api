@@ -1,0 +1,16 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Simple User Auth API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Raphael Passos",
+            "url": "http://github.com/raphael251",
+            "email": "raphael251@hotmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {}
+}

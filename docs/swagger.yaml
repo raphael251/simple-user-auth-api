@@ -1,0 +1,12 @@
+basePath: /
+host: localhost:3000
+info:
+  contact:
+    email: raphael251@hotmail.com
+    name: Raphael Passos
+    url: http://github.com/raphael251
+  termsOfService: http://swagger.io/terms/
+  title: Simple User Auth API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

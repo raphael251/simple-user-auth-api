@@ -11,6 +11,16 @@ import (
 	"github.com/raphael251/simple-user-auth-api/pkg/utils"
 )
 
+// Create user godoc
+// @Summary		 Create user
+// Description Create user
+// @Tags			 users
+// @Accept		 json
+// @Produce		 json
+// @Param			 request 	body 		 dto.CreateUserInput true "user request"
+// @Success		 201
+// @Failure		 500		 	{object} utils.Error
+// @Router		 /users	[post]
 func CreateUserHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user dto.CreateUserInput
@@ -45,5 +55,7 @@ func CreateUserHandler(db *sql.DB) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
+		w.WriteHeader(http.StatusCreated)
 	}
 }

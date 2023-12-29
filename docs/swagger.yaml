@@ -1,4 +1,17 @@
 basePath: /
+definitions:
+  dto.CreateUserInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  utils.Error:
+    properties:
+      message:
+        type: string
+    type: object
 host: localhost:3000
 info:
   contact:
@@ -8,5 +21,28 @@ info:
   termsOfService: http://swagger.io/terms/
   title: Simple User Auth API
   version: "1.0"
-paths: {}
+paths:
+  /users:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUserInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: Create user
+      tags:
+      - users
 swagger: "2.0"

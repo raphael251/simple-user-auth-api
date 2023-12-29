@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"time"
 
+	"github.com/go-chi/jwtauth"
 	"github.com/raphael251/simple-user-auth-api/infra/database"
 	"github.com/raphael251/simple-user-auth-api/internal/dto"
 	"github.com/raphael251/simple-user-auth-api/internal/entity"
@@ -57,5 +59,47 @@ func CreateUserHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		w.WriteHeader(http.StatusCreated)
+	}
+}
+
+func HandleLogin(db *sql.DB, jwt *jwtauth.JWTAuth, jwtExpiresIn int) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var user dto.UserLoginInput
+
+		err := json.NewDecoder(r.Body).Decode(&user)
+
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		foundUser, err := database.FindUserByEmail(db, user.Email)
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			errMessage := utils.Error{Message: "Invalid e-mail or password"}
+			json.NewEncoder(w).Encode(errMessage)
+			return
+		}
+
+		isValid := foundUser.ValidatePassword(user.Password)
+
+		if !isValid {
+			w.WriteHeader(http.StatusUnauthorized)
+			errMessage := utils.Error{Message: "Invalid e-mail or password"}
+			json.NewEncoder(w).Encode(errMessage)
+			return
+		}
+
+		_, tokenString, _ := jwt.Encode(map[string]interface{}{
+			"sub": foundUser.ID.String(),
+			"exp": time.Now().Add(time.Second * time.Duration(jwtExpiresIn)).Unix(),
+		})
+
+		accessToken := dto.UserLoginOutput{AccessToken: tokenString}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(accessToken)
 	}
 }

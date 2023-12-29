@@ -43,6 +43,7 @@ func main() {
 
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/", handlers.CreateUserHandler(db))
+		r.Post("/login", handlers.HandleLogin(db, configs.TokenAuthKey, configs.JWTExpiresIn))
 	})
 
 	r.Get("/docs/*",

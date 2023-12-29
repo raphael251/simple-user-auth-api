@@ -41,7 +41,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	r.Route("/users", func(r chi.Router) {
+	r.Route("/api/v1/users", func(r chi.Router) {
 		r.Post("/", handlers.CreateUserHandler(db))
 		r.Post("/login", handlers.HandleLogin(db, configs.TokenAuthKey, configs.JWTExpiresIn))
 	})

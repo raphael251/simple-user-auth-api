@@ -7,6 +7,18 @@ definitions:
       password:
         type: string
     type: object
+  dto.UserLoginInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.UserLoginOutput:
+    properties:
+      access_token:
+        type: string
+    type: object
   utils.Error:
     properties:
       message:
@@ -43,6 +55,35 @@ paths:
           schema:
             $ref: '#/definitions/utils.Error'
       summary: Create user
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserLoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserLoginOutput'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: Login
       tags:
       - users
 swagger: "2.0"

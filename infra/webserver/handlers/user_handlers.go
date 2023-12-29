@@ -62,6 +62,17 @@ func CreateUserHandler(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+// HandleLogin godoc
+// @Summary		 Login
+// Description Handles user login, returning a JWT access token
+// @Tags			 users
+// @Accept		 json
+// @Produce		 json
+// @Param			 request 			body 			dto.UserLoginInput		true	"user credentials"
+// @Success		 200 					{object}	dto.UserLoginOutput
+// @Failure		 401					{object}	utils.Error
+// @Failure		 500		 			{object}	utils.Error
+// @Router		 /users/login	[post]
 func HandleLogin(db *sql.DB, jwt *jwtauth.JWTAuth, jwtExpiresIn int) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user dto.UserLoginInput

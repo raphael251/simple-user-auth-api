@@ -23,6 +23,10 @@ A simple user authentication API written in Golang. This is one of my first proj
 
 1. Enter the `cmd/server` folder and run `go run main.go`. If you don't change the initial `.env` file, the application will start on port 3000.
 
+### Open API Swagger Docs
+
+After running the project, you can go to the address `http://localhost:3000/docs/index.html` and test the API endpoints via the interface.
+
 ### API Endpoints
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |

@@ -10,3 +10,23 @@ services:
       - POSTGRES_PASSWORD=123456
     ports:
       - 5432:5432
+
+  user-auth-api:
+    build: .
+    container_name: user-auth-api
+    environment:
+      - DB_DRIVER=postgres
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_NAME=user-auth-db
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - SERVER_PROTOCOL=http
+      - SERVER_HOST=localhost
+      - SERVER_PORT=3000
+      - JWT_SECRET=my_secret
+      - JWT_EXPIRES_IN=900
+    ports:
+     - 3000:3000
+    depends_on:
+      - user-auth-db
